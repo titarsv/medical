@@ -276,9 +276,14 @@ $(function() {
                             html += '</li>';
                         } else {
                             html += '<li class="selectable" data-name="' + value.name + '" data-id="' + value.product_id + '">';
+                            html += '<img href="'+value.image+'" class="found-img">';
                             html += '<a href="/product/'+value.url+'">';
                             html += value.name;
                             html += '</a>';
+                            html += '<p>';
+                            html += value.price;
+                            html += ' грн';
+                            html += '</p>';
                             html += '</li>';
                         }
                     });

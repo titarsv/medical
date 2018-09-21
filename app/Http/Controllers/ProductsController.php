@@ -366,7 +366,9 @@ class ProductsController extends Controller
                 $json[] = [
                     'product_id' => $result->id,
                     'name'       => $result->name,
-                    'url'        => $result->url_alias
+                    'url'        => $result->url_alias,
+                    'price'        => $result->price,
+                    'image'        => $result->image->url(),
                 ];
             }
         }
