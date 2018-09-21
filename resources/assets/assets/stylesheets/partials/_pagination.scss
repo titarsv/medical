@@ -1,0 +1,60 @@
+.pagination-wrapper {
+    margin-top: 20px;
+    text-align: center;
+    .pagination {
+        margin: 5px 0;
+    }
+    .page-numbers, .pagor {
+        display: inline-block;
+        margin: 0 7px;
+        vertical-align: middle;
+        color: $blue--dark;
+        text-decoration: none;
+        transition: color .3s ease-in-out;
+        font-size: $fontSize-small;
+        font-weight: $fontWeight-bold;
+        &:hover {
+            color: $color-primary;
+            text-decoration: underline;
+        }
+        &.current, &.selected {
+            color: $color-primary;
+            text-decoration: underline;
+        }
+        &.dots {
+            &:hover {
+                color: $blue--dark;
+                text-decoration: none;
+            }            
+        }
+        &.prev,
+        &.next {
+            font-family: 'icons' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+
+            /* Better Font Rendering =========== */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        &.prev {
+            &:before {
+                content: $icon-arrow-left;
+            }
+        }
+        &.next {
+            &:before {
+                content: $icon-arrow-right;
+            }
+        }
+    }
+}
+.pagination--toright {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

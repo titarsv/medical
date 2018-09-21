@@ -1,0 +1,81 @@
+.contactItem-timetable {
+	span {
+		color: $blue--dark;
+		font-weight: $fontWeight-bold;
+	}
+	&:before {
+		content: ' ';
+		position: relative;
+		top: 5px;
+		display: inline-block;
+		background: url("../images/sprite.png");
+		width: 22px;
+		height: 22px;
+		background-position: -123px -10px;
+		margin-right: 20px;
+	}
+}
+.contactItem-phone {
+	span {
+		color: $blue--dark;
+		font-weight: $fontWeight-bold;
+		&:before {
+			content: ' ';
+			position: relative;
+			top: 5px;
+			display: inline-block;
+			background: url("../images/sprite.png");
+			width: 22px;
+			height: 22px;
+			background-position: -123px -52px;
+			margin-right: 20px;
+		}
+	}	
+}
+.contact-email{
+	span {
+		color: $blue--dark;
+		font-weight: $fontWeight-bold;
+	}
+	&:before {
+		content: url('../images/envelope.png');
+		height: 22px;
+		width: 22px;
+		position: relative;
+		top: 5px;
+		margin-right: 20px;
+	}
+	a{
+		color: #000;
+		text-decoration: none;
+	}
+	a:hover{
+		color: #000;
+		text-decoration: underline;
+	}
+}
+.contactItem-col {
+	display: inline-block;
+	margin-left: 42px;
+	float: left;
+	margin-top: 10px;
+	a {
+		color: $gray;
+		&:hover,
+		&:focus {
+			color: $gray;
+			text-decoration: underline;
+		}
+	}
+}
+.contactForm {
+	.row {
+		margin-left: -7px;
+		margin-right: -7px;
+	}
+	.col-md-4,
+	.col-xs-12 {
+		padding-left: 7px;
+		padding-right: 7px;
+	}
+}

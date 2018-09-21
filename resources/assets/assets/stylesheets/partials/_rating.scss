@@ -1,0 +1,14 @@
+$color-stars: $color-primary;
+.rating {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+        position: relative;
+        display: inline;
+        line-height: normal;
+        color: $color-stars;
+        transition: color .3s ease-in-out;
+    }
+}
+

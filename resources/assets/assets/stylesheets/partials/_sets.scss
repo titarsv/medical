@@ -1,0 +1,45 @@
+.setsList {
+	.slick-arrow {
+		border: solid $gray;
+    	border-width: 0 2px 2px 0;
+    	padding: 7px;
+		&.slick-prev {
+			left: 0;
+		}
+		&.slick-next {
+			right: 0;
+		}
+	}
+}
+.setsList-plus {
+	font-size: 60px;
+	text-align: center;
+	color: $blue--dark;
+	margin-top: 130px;	
+	font-weight: $fontWeight-light;
+}
+.setsList-equal {
+	font-size: 60px;
+	text-align: center;
+	color: $color-primary;
+	margin-top: 130px;
+	font-weight: $fontWeight-light;
+}
+.setsList-exprice {
+	text-decoration: line-through;
+	font-size: $fontSize-larger;
+	text-align: center;
+	margin-top: 120px;
+}
+.setsList-price {
+	color: $blue--dark;
+	font-size: 32px;
+	text-align: center;
+	font-weight: $fontWeight-bold;
+}
+.setsList-product {
+	max-width: 160px;
+}
+.setsList-sign {
+	width: auto;
+}

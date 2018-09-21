@@ -1,0 +1,84 @@
+body{
+  opacity: 1 !important;
+  margin: 0 !important;
+}
+
+.slick-slider:not(.slick-initialized){
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100000px;
+}
+
+@mixin bp($point) {
+  @if $point == xxl {
+    @media only screen and (max-width: 1800px) {
+      @content;
+    }
+  } @else if $point == xl {
+    @media only screen and (max-width: 1679px) {
+      @content;
+    }
+  } @else if $point == lg {
+    @media only screen and (max-width: 1199px) {
+      @content;
+    }
+  } @else if $point == md {
+    @media only screen and (max-width: 991px) {
+      @content;
+    }
+  } @else if $point == sm {
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  } @else if $point == xs {
+    @media only screen and (max-width: 480px) {
+      @content;
+    }
+  }
+}
+
+main{
+  min-height: calc(100vh - 421px);
+}
+
+@import 'variables';
+@import 'vendor';
+
+@import 'vendor/vendor';
+@import 'setup/setup';
+
+@import 'wp-core';
+@import 'global';
+@import 'partials/layout';
+@import 'partials/forms';
+
+@import 'partials/footer';
+@import 'partials/header';
+@import 'partials/pagination';
+@import 'partials/rating';
+@import 'partials/breadcrumbs';
+
+@import 'partials/teaser';
+@import 'partials/product';
+@import 'partials/product-view';
+@import 'partials/cooperation';
+@import 'partials/benefits';
+@import 'partials/news';
+@import 'partials/news-list';
+@import 'partials/tabs';
+@import 'partials/sets';
+@import 'partials/filter';
+@import 'partials/contact';
+@import 'partials/category';
+@import 'partials/article';
+@import 'partials/delivery';
+@import 'partials/certeficate';
+@import 'partials/about';
+@import 'partials/popups';
+@import 'partials/404-error';
+
+@media screen and (max-width: 480px){
+  h2{
+    margin-bottom: 5px;
+  }
+}

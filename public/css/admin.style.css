@@ -1,0 +1,765 @@
+@import 'https://fonts.googleapis.com/css?family=Ubuntu';
+@import 'https://fonts.googleapis.com/css?family=PT+Sans+Narrow';
+
+html, body, .container-fluid, .row
+{
+    height: 100%;
+}
+
+body
+{
+    font-family: Ubuntu, Helvetica, Arial, sans-serif;
+    background: #ecf0f5;
+}
+
+main
+{
+    padding-top: 50px;
+}
+
+.navbar
+{
+    background-color: #00c0ef;
+    border-radius: 0;
+    margin-bottom: 0;
+    border: none;
+    padding: 0 10px;
+}
+
+.navbar-header, .navbar-nav,
+h1, h2, h3, h4, h5, h6
+{
+    font-family: 'PT Sans Narrow', Ubuntu, Helvetica, Arial, sans-serif;
+}
+
+.navbar-brand
+{
+    font-size: 25px;
+}
+
+#sidebar
+{
+    background-color: #222d32;
+    padding: 40px 0 0;
+    position: fixed;
+    left: 0;
+    top: 50px;
+    bottom: 0;
+}
+
+.nav-pills > li > a
+{
+    border-radius: 0;
+    border-left: 4px solid transparent;
+    color: #b8c7ce;
+}
+
+.nav-pills.nav-collapse li a{
+    font-size: 12px;
+    padding-left: 20px;
+}
+
+.nav-pills > li >a:focus, .nav-pills > li >a:hover
+{
+    color: #fff;
+    background-color: #1e282c;
+    border-color: #3c8dbc;
+}
+
+.nav-pills.nav-collapse > li >a:focus, .nav-pills.nav-collapse > li >a:hover
+{
+    border-color: transparent;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active >a:focus, .nav-pills >li.active > a:hover
+{
+    background-color: #1e282c;
+    border-color: #3c8dbc;
+}
+
+.nav-pills.nav-collapse > li.active > a, .nav-pills.nav-collapse > li.active >a:focus, .nav-pills.nav-collapse >li.active > a:hover
+{
+    border-color: transparent;
+}
+
+.nav-pills > li i.fa
+{
+    margin-right: 10px;
+}
+
+.nav-pills > li > p.nav-collapse
+{
+    color: #b8c7ce;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 0;
+    border-left: 4px solid transparent;
+    position: relative;
+}
+
+.nav-pills > li > p.nav-collapse.active,
+.nav-pills > li > p.nav-collapse:hover
+{
+    color: #fff;
+    border-color: #3c8dbc;
+    background-color: #1e282c;
+}
+
+.nav-pills > li > p.nav-collapse:after {
+    content: '\f105';
+    font-family: FontAwesome;
+    position: absolute;
+    font-size: 16px;
+    line-height: 40px;
+    right: 20px;
+    top: 0;
+    color: #b8c7ce;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.nav-pills > li > p.nav-collapse.active:after
+{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    color: #fff;
+}
+
+.badge
+{
+    position: absolute;
+    top: 7px;
+    right: 0;
+    background: #f39c12 ;
+}
+
+.panel-group{
+    background-color: #fff;
+    margin-bottom: 0;
+    border-top: solid 5px #f39c12;
+}
+
+.panel-group .panel
+{
+    border-radius: 0;
+    border: none;
+}
+
+ul.pagination,
+.pagination>li:first-child>a, .pagination>li:first-child>span,
+.pagination>li:last-child>a, .pagination>li:last-child>span
+{
+    border-radius: 0;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover
+{
+    background-color: #f39c12;
+    border-color: #f39c12;
+}
+
+.btn
+{
+    border-radius: 0;
+    background-color: #00c0ef;
+    color: #fff;
+    -webkit-box-shadow: 3px 3px 5px 0px #1e282c;
+    -moz-box-shadow: 3px 3px 5px 0px #1e282c;
+    box-shadow: 3px 3px 5px 0px #1e282c;
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn:hover
+{
+    background-color: #f39c12;
+    color: #fff;
+}
+
+.btn:focus
+{
+    color: #fff;
+    outline: none !important;
+}
+
+.btn:active,
+.btn.active
+{
+    outline: none;
+    -webkit-box-shadow: 1px 1px 2px 0px #1e282c;
+    -moz-box-shadow: 1px 1px 2px 0px #1e282c;
+    box-shadow: 1px 1px 2px 0px #1e282c;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.btn.btn-danger,
+.btn.btn-info,
+.btn.btn-warning,
+.btn.btn-success,
+.btn.btn-default,
+.btn.btn-primary
+{
+    border-color: transparent;
+}
+
+.btn.btn-primary
+{
+    background-color: #f39c12;
+}
+
+.btn.btn-primary:hover
+{
+    background-color: #00c0ef;
+}
+
+.btn.btn-danger
+{
+    background-color: red;
+}
+
+.btn.btn-danger:hover
+{
+    background-color: #000;
+}
+
+.btn.product-sort-button
+{
+    background-color: transparent;
+    border: 1px solid #e0e3eb;
+    border-top: 4px solid transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    color: #000;
+}
+
+.btn.product-sort-button:hover
+{
+    border-top-color: #00c0ef;
+    border-bottom-color: transparent;
+}
+
+.btn.product-sort-button.active
+{
+    border-top-color: #605ca8;
+    border-bottom-color: transparent;
+}
+
+.btn-group.open .dropdown-toggle.product-sort-button
+{
+    box-shadow: none;
+    border-top-color: #00c0ef;
+    border-bottom-color: transparent;
+}
+
+.dropdown-toggle.product-sort-button .caret
+{
+    margin-left: 5px;
+}
+
+.form-control
+{
+    border-radius: 0;
+    border-color: rgba(60,141,188,0.4);
+}
+
+.form-control:focus
+{
+    border-color: rgba(60,141,188,0.3);
+    -webkit-box-shadow: inset 0 1px 1px rgba(243,156,18,.075),0 0 8px rgba(243,156,18,.7);
+    -moz-box-shadow: inset 0 1px 1px rgba(243,156,18,.075),0 0 8px rgba(243,156,18,.7);
+    box-shadow: inset 0 1px 1px rgba(243,156,18,.075),0 0 8px rgba(243,156,18,.7);
+}
+
+.input-group
+{
+    margin-bottom: 10px;
+}
+
+.input-group-addon
+{
+    cursor: pointer;
+    border-radius: 0;
+    border-color: rgba(60,141,188,0.4);
+    background-color: #fff;
+}
+
+.form-control:focus + .input-group-addon
+{
+    border-color: rgba(60,141,188,0.3);
+    -webkit-box-shadow: inset 0 1px 1px rgba(243,156,18,.075),0 0 8px rgba(243,156,18,.7);
+    -moz-box-shadow: inset 0 1px 1px rgba(243,156,18,.075),0 0 8px rgba(243,156,18,.7);
+    box-shadow: inset 0 1px 1px rgba(243,156,18,.075),0 0 8px rgba(243,156,18,.7);
+}
+
+.form-control::-webkit-input-placeholder       {text-indent: 0;  transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control::-moz-placeholder                {text-indent: 0;  transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control:-moz-placeholder                 {text-indent: 0;  transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control:-ms-input-placeholder            {text-indent: 0;  transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control:focus::-webkit-input-placeholder {text-indent: 2000px; transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control:focus::-moz-placeholder          {text-indent: 2000px; transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control:focus:-moz-placeholder           {text-indent: 2000px; transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+.form-control:focus:-ms-input-placeholder      {text-indent: 2000px; transition: text-indent .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+
+label
+{
+    margin-top: 6px;
+}
+
+label.control-label:after 
+{
+    content: '*';
+    position: absolute;
+    top: -4px;
+    right: 5px;
+    color: red;
+}
+
+p.warning
+{
+    color: red;
+    margin: 10px 10px 0;
+}
+
+.input-group + p.warning
+{
+    margin-bottom: 10px;
+}
+
+textarea.form-control
+{
+    resize: none;
+}
+
+.alert
+{
+    border-radius: 0;
+}
+
+.alert-success
+{
+    background-color: #f39c12;
+    color: #fff;
+    border-color: transparent;
+}
+
+.alert-danger
+{
+    background-color: red;
+    color: #fff;
+    border-color: transparent;
+}
+
+.category-image,
+.description-image,
+.module-image
+{
+    display: inline-block;
+    position: relative;
+}
+.module-image
+{
+    padding: 10px;
+}
+
+.category-image .btn,
+.description-image .btn,
+.module-image .btn
+{
+    display: block;
+    margin: 0 auto;
+}
+
+.category-image img,
+.description-image img
+{
+    width: 250px;
+    max-height: 250px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+.module-image img
+{
+    width: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+
+.btn-del
+{
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    color: #fff;
+    background: red;
+}
+
+.module-image .btn-del
+{
+    top: -8px;
+    right: -8px;
+}
+
+.slideshow-images table tbody tr td,
+#recommended-products tr td
+{
+    vertical-align: middle;
+}
+
+#imageViewer {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+#imageViewer {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+#imageViewer .image__item {
+    width: 150px;
+    text-align: center;
+    padding-top: 10px;
+    height: 150px;
+    overflow: hidden;
+}
+
+#imageViewer .image__item.selected {
+    background: #66f;
+}
+
+#imageViewer .image__item img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+#imageViewer .image__item span {
+    display: block
+}
+
+#image-library {
+    height: 400px;
+}
+
+#image-library .inner {
+    height: inherit;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: #fff
+}
+
+.tab-pane {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+#openLibrary {
+    display: none;
+}
+
+#dropzone {
+    width: 100%
+}
+
+#dropzone input[type="file"] {
+    display: none
+}
+
+#dropzone form {
+    width: 100%;
+    height: 100%
+}
+
+#fileNames {
+    display: none
+}
+
+#fileNames.active {
+    display: table
+}
+
+#fileNames img {
+    width: 30px
+}
+
+.spinner {
+    -moz-animation: spinner 2s linear infinite;
+    -webkit-animation: spinner 2s linear infinite;
+    animation: spinner 2s linear infinite
+}
+
+@-moz-keyframes spinner {
+    0% {
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes spinner {
+    0% {
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    100% {
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+#imagesloaderForm label.btn
+{
+    margin: 0 10px 0 0;
+}
+
+#content table .img-thumbnail,
+.attribute-image .img-thumbnail
+{
+    width: 100px;
+}
+
+#content span.on,
+#content span.off
+{
+    width: 50px;
+    height: 20px;
+    border-radius: 10px;
+    display: block;
+    position: relative;
+}
+
+#content span.on
+{
+    background-color: #f39c12;
+    border: 1px solid #f39c12;
+}
+
+#content span.off
+{
+    background-color: #fff;
+    border: 1px solid #f39c12;
+}
+
+#content span.on .runner,
+#content span.off .runner
+{
+    display: block;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #f39c12;
+}
+
+#content span.off .runner
+{
+    left: -1px;
+    right: auto;
+    top: -1px;
+}
+
+#content table tr td.description
+{
+    max-width: 200px;
+}
+
+#content table tr td.description p
+{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+#content table tr td.status,
+#content table tr td.actions
+{
+    vertical-align: middle;
+}
+
+div.form-control {
+    min-height: 200px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.autocomplete-search
+{
+    position: relative;
+}
+
+.search-results
+{
+    position: absolute;
+    display: none;
+    width: 500px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1;
+    padding: 5px 0;
+}
+
+.autocomplete-selected
+{
+    padding: 5px 0;
+}
+
+.search-results ul,
+.autocomplete-selected ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+.search-results ul li,
+.autocomplete-selected ul li
+{
+    cursor: pointer;
+    padding: 5px 20px;
+    list-style: none;
+}
+
+.autocomplete-selected ul li span
+{
+    color: blue;
+    display: none;
+}
+
+.search-results ul li:hover,
+.autocomplete-selected ul li:hover
+{
+    background-color: #f5f5f5;
+}
+
+.autocomplete-selected ul li:hover span
+{
+    display: inline-block;
+}
+
+#sidebar a .badge {
+    position: static;
+    padding: 4px 7px;
+}
+.attribute-image .btn-del{
+    top: -15px;
+    right: 0;
+}
+.attribute-images-settings tr td{
+    width: 50%;
+}
+
+.gallery-container > div{
+    position: relative;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.gallery-container > div > div{
+    padding: calc(50% + 2px);
+}
+
+.gallery-container > div > div{
+    border: 1px dashed #cccccc;
+    overflow: hidden;
+}
+
+.gallery-container > div > div > img{
+    width: calc(100% - 16px);
+    height: calc(100% - 2px);
+    position: absolute;
+    top: 1px;
+    left: 11px;
+    object-fit: cover;
+}
+
+.gallery-container > div > div.add-btn{
+    cursor: pointer;
+}
+
+.gallery-container > div > div.add-btn:before{
+    content: "+";
+}
+
+.gallery-container .remove-gallery-image, .gallery-container > div > div.add-btn:before{
+    font-size: 50px;
+    line-height: 16px;
+    height: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #ccc;
+}
+
+.gallery-container > div > div.add-btn:hover:before{
+    color: #333;
+}
+
+.gallery-container > div > div:hover > .remove-gallery-image{
+    z-index: 10;
+    cursor: pointer;
+}
+
+.gallery-container > div > div:not(.add-btn):hover:before{
+    content: "";
+    width: calc(100% - 16px);
+    height: calc(100% - 2px);
+    position: absolute;
+    top: 1px;
+    left: 11px;
+    z-index: 5;
+    background-color: rgba(32, 32, 32, 0.4);
+}

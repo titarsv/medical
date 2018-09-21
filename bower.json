@@ -1,0 +1,26 @@
+{
+  "name": "vagro.lh",
+  "description": "",
+  "main": "",
+  "authors": [
+    "titarsv <titarsv@yandex.ru>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "jquery.nicescroll": "^3.6.8",
+    "chart.js": "^2.4.0",
+    "bootstrap-sass": "^3.3.7",
+    "jquery.cookie": "^1.4.1",
+    "chosen": "^1.6.2"
+  }
+}

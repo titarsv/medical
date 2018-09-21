@@ -1,0 +1,141 @@
+.filterList {
+	.tab_wrapper {
+		margin: 10px 0;
+		.content_wrapper {
+			.accordian_header {
+				background: $white;
+				box-shadow: 0px 2px 9px 0 rgba(46, 41, 74, 0.06);
+				border: none;
+				padding: 10px 20px;
+				border-bottom: solid 1px $gray--light;
+				margin-bottom: 15px;
+				font-weight: $fontWeight-extrabold;
+				color: $blue--dark;
+				&.active {
+					margin-bottom: 0;
+					.arrow {
+					  position: relative;
+					  top: 4px;
+					  width: 0; 
+					  height: 0; 
+					  border-top: none;
+					  border-left: 5px solid transparent;
+					  border-right: 5px solid transparent;
+					  border-bottom: 5px solid $color-primary;
+					  transform: none;
+					}
+				}
+				.arrow {
+				  position: relative;
+				  top: 8px;
+				  width: 0; 
+				  height: 0; 
+				  border-left: 5px solid transparent;
+				  border-right: 5px solid transparent;
+				  border-top: 5px solid $color-primary;
+				  transform: none;
+				}
+			}
+			.tab_content {
+				position: relative;
+				background: $white;
+				box-shadow: 0 2px 9px 0 rgba(46, 41, 74, 0.06);
+				border: none;
+				margin-bottom: 15px;
+				z-index: 10;
+				padding: 15px 20px;
+				height: auto;
+			}
+		} 
+	}
+	ul {
+		li {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+}
+.filterList-category {
+	background: $white;
+	box-shadow: 0px 2px 9px 0 rgba(46, 41, 74, 0.06);
+}
+.filterList-category-item {
+	border-bottom: solid 1px $gray--light;
+	display: table;
+	width: 100%;
+	margin: 10px 0;
+	&:after {
+	    content: '';
+	    display: table;
+	    clear: both;
+	}
+	&:hover,
+	&:focus {
+		cursor: pointer;
+		img {
+			transform: translateX(10px);
+		}
+	}
+}
+.filterList-category-img {
+	position: relative;
+	width: 45px;
+	height: 57px;
+	float: left;
+	overflow: hidden;
+	display: table-cell;
+	vertical-align: middle;
+	img {
+		position: absolute;
+		left: -10px;
+		transition: all .3s ease-in-out;
+		width: 120%;
+	}
+}
+.filterList-category-text {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	padding: 0 5px;
+	a {
+		font-size: $fontSize-base;
+		color: $gray;
+		&:hover,
+		&:focus {
+			color: $gray;
+		}
+	}
+}
+@media screen and (max-width: 1024px){
+	.filterList-category-text{
+		padding:0;
+	}
+}
+@media screen and (max-width: 991px){
+	.filterList-category-text{
+		padding:0 5px;
+	}
+}
+.filterList-category-accordion {
+	padding: 15px 15px;
+	li{
+		margin-bottom: 10px;
+		a{
+			color: $gray;
+			font-size: 12px;
+		}
+		a:hover{
+			color: #000;
+		}
+	}
+	li::before{
+		content:'•';
+		margin-right: 10px;
+		font-size: 15px;
+	}
+}
+.hidden{
+	display: none;
+}

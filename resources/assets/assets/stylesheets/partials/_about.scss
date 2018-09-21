@@ -1,0 +1,31 @@
+.about-us-content{
+    margin-bottom: 15px;
+    color: #000;
+}
+@media screen and (max-width: 991px){
+    .about-us-content{
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}
+.about-us-text{
+    text-indent: 20px;
+}
+.about-us-content-slog{
+    font-weight: 900;
+    font-style: italic;
+    text-align: center;
+}
+
+// FIRST PAGE
+.inform-section-title{
+    text-align: center;
+    text-transform: capitalize;
+}
+.inform-title{
+    color: #4bb9ed;
+}
+.inform-text{
+    text-align: center;
+    font-style: italic;
+}

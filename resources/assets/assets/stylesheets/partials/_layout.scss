@@ -1,0 +1,58 @@
+//vars
+$content-width: 1140px;
+$content-width--small: 940px;
+$content-gutters: 25px;
+
+.siteSection {
+    padding-top: 50px;
+    // padding-bottom: 50px;
+    @media screen and (max-width: 480px){
+        padding-top: 30px;
+    }
+}
+.siteSection--gray-light {
+    background: #fdfdfd;
+}
+.siteSection--gray {
+    background: #f4f7fa;
+}
+.siteSection--bordered {
+    border-bottom: solid 1px $gray--light;
+}
+.siteSection--noPad {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.full-height{
+  min-height: calc(100vh - 245px);
+}
+
+
+//in case we have sidebar
+$sidebar-width: 300px;
+.container.has-sidebar {
+    @include breakpoint(large) {
+        padding-right: $sidebar-width;
+    }
+    .siteContent-body {
+        @include breakpoint(large) {
+            padding-right: $content-gutters*2;
+        }
+    }
+}
+.siteContent-body {
+    @include breakpoint(large) {
+        float: left;
+        width: 100%;
+        padding-right: 0;
+    }
+}
+.siteContent-side {
+    position: relative;
+    @include breakpoint(large) {
+        float: left;
+        width: $sidebar-width;
+        margin-left: -$sidebar-width;
+        left: $sidebar-width;
+    }
+}
