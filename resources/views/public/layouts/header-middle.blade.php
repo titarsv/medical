@@ -5,7 +5,7 @@
             <div class="descriptor">Автоаксессуары по Украине</div>
         </div>
         {!! Form::open(['route' => 'search', 'class' => 'search_block']) !!}
-            {!! Form::input('search', 'text', null, ['placeholder' => 'Поиск по сайту'] ) !!}
+            {!! Form::input('search', 'text', null, ['placeholder' => 'Поиск по сайту', 'autocomplete' => 'off'] ) !!}
             <button></button>
         {!! Form::close()!!}
         <div class="phones_block">

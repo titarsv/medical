@@ -358,7 +358,12 @@ class ProductsController extends Controller
      */
     public function livesearch(Request $request, Products $products)
     {
-        $results = $products->where('name', 'like', '%' . $request->search . '%')->paginate(5);
+        $search = explode(' ', $request->search);
+        $results = $products->where('stock', 1);
+        foreach($search as $s){
+            $results->where('name', 'like', '%' . $s . '%');
+        }
+        $results = $results->paginate(5);
 
         foreach ($results as $result) {
 
