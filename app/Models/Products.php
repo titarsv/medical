@@ -104,6 +104,12 @@ class Products extends Model
         return $this->belongsToMany('App\Models\Products', 'product_sets', 'set_id', 'product_id');
     }
 
+	// Вариации
+	public function variations()
+	{
+		return $this->hasMany('App\Models\Variation', 'product_id');
+	}
+
     // Связанные товары
     public function related()
     {

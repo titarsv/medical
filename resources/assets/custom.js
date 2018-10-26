@@ -11,11 +11,140 @@ $(function() {
         }
     });
 
-  // Выбор вариации
-  $('.variation-select').change(function(){
-      var val = $(this).val();
-      $('.product-price').html($(this).find('option[value="'+val+'"]').data('price'));
-  });
+    // Выбор вариации
+    $('.variation-select, .result-price .count_field').change(function(){
+        // var result_price = parseFloat($('.product-price').data('price'));
+        // var hash = '';
+        // $('.variation-select').each(function(){
+        //     var val = $(this).val();
+        //     result_price += parseFloat($(this).find('option[value="'+val+'"]').data('price'));
+        //     if(val != '' && hash != ''){
+        //         hash += '-';
+        //     }
+        //     hash += val;
+        // });
+        // $('.product-price').html(result_price + ' грн.');
+        // if(hash != ''){
+        //     location.hash = hash;
+        // }else{
+        //     history.pushState("", document.title, window.location.pathname + window.location.search);
+        // }
+
+        var result_price = parseFloat($('.product-price').data('price'));
+        var hash = '';
+        var attrs = [];
+        $('.variation-select').each(function(){
+            var val = $(this).val();
+            if(val != ''){
+                attrs.push(val);
+            }
+        });
+        hash = attrs.sort().join('_');
+
+        $('[name="variation"]').prop('checked', false);
+        var input = $('#var_'+hash);
+        if(hash != '' && input.length){
+            input.prop('checked', true);
+            location.hash = hash;
+            var price = parseFloat(input.data('price'));
+            $('.product-price').html(price + ' грн.');
+            var result_price = price * parseInt($('.result-price .count_field').val());
+            $('.result-product-price').html(result_price + ' грн.');
+            $('.result-product-price-wrapper').show();
+        }else{
+            if($('.variation-select').length == 0){
+                var price = parseFloat($('.product-price').data('price'));
+                var result_price = price * parseInt($('.result-price .count_field').val());
+                $('.result-product-price').html(result_price + ' грн.');
+                $('.result-product-price-wrapper').show();
+            }else{
+                if(window.location.hash !== '')
+                    history.pushState("", document.title, window.location.pathname + window.location.search);
+                $('.product-price').html($('.product-price').data('price') + ' грн.');
+                $('.result-product-price-wrapper').hide();
+                if($(this).hasClass('variation-select')){
+                    flushNextSelects($(this));
+                    $('.result-price .count_field').change();
+                }
+            }
+        }
+        hideVariationOptions();
+    });
+
+    function flushNextSelects(select){
+        var selects = $('.variation-select');
+        for(var i=selects.index(select)+1; i<selects.length; i++){
+            selects.eq(i).find('option:first-child').prop('selected', true);
+        }
+    }
+
+    function clearVariations(variations, attrs, attr){
+        var new_variations = [];
+        for(var v=0; v<variations.length; v++){
+            var isset = true;
+            if(variations[v].indexOf(attr) < 0){
+                isset = false;
+            }
+            for(var a=0; a<attrs.length; a++){
+                if(variations[v].indexOf(attrs[a]) < 0 ){
+                    isset = false;
+                }
+            }
+            if(isset){
+                new_variations.push(variations[v]);
+            }
+        }
+        return new_variations;
+    }
+
+    function hideVariationOptions(){
+        var variations = [];
+        var current_select;
+        $('[name="variation"]').each(function(){
+            variations.push($(this).attr('id').replace('var_', ''));
+        });
+        var selects = $('.variation-select');
+        var attrs = [];
+        if(selects.length > 1){
+            if(selects.eq(0).val() !== '')
+                attrs.push(selects.eq(0).val());
+
+            for(var i=1; i<selects.length; i++){
+                current_select = selects.eq(i);
+                current_select.find('option').each(function(){
+                    var opt_var = clearVariations(variations, attrs, $(this).val());
+                    if(opt_var.length == 0){
+                        $(this).attr('disabled', 'disabled').css('display', 'none');
+                        if(current_select.val() == $(this).val()){
+                            current_select.find('option:first-child').prop('selected', true);
+                        }
+                    }else{
+                        $(this).prop('disabled', false).css('display', 'block');
+                    }
+                });
+                if(selects.eq(i).val() !== ''){
+                    attrs.push(selects.eq(i).val());
+                }else{
+                    // i++;
+                    // while(i<selects.length){
+                    //     console.log(selects.eq(i));
+                    //     selects.eq(i).find('option').prop('disabled', false).css('display', 'block');
+                    //     i++;
+                    // }
+                    // break;
+                }
+            }
+        }
+    }
+
+    var hash_parts = location.hash.replace('#', '').split('_');
+    if(hash_parts.length){
+        for(var i=0; i<hash_parts.length; i++){
+            var option = $('.variation-select option[value="'+hash_parts[i]+'"]');
+            option.prop('selected', true);
+        }
+        $('.variation-select').trigger('change');
+    }
 
     $('.btn_buy').click(function (e) {
         e.preventDefault();

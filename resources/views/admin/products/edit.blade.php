@@ -483,6 +483,103 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Вариации товара</h4>
+                    </div>
+                    <div class="panel-body">
+                        @foreach($product->variations as $i => $variation)
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="col-sm-2 text-right">Цена</label>
+                                    <div class="form-element col-sm-10">
+                                        <input type="text" class="form-control variation-price" name="variations[{{ $i }}][price]" value="{!! $variation->price !!}" />
+                                        @if($errors->has('robots'))
+                                            <p class="warning" role="alert">{!! $errors->first('robots',':message') !!}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="table table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr class="success">
+                                                <td align="center">Выберите атрибут</td>
+                                                <td align="center">Выберите значение атрибута</td>
+                                                <td align="center">Действия</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="product-attributes">
+                                            @forelse($variation->attribute_values as $key => $val)
+                                                <?php $attr_id = $val->attribute->id ?>
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control" onchange="getVariationAttributeValues($(this), {{ $i }})">
+                                                            @foreach($attributes as $attribute)
+                                                                <option value="{!! $attribute->id !!}"
+                                                                        @if ($attribute->id == $attr_id)
+                                                                        selected
+                                                                        @endif
+                                                                >{!! $attribute->name !!}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td align="center">
+                                                        {{--<input type="hidden" name="variations[{{ $i }}][id][{!! $key !!}]" value="{!! $val->id !!}" class="variation_value"/>--}}
+                                                        <select class="form-control variation_value" name="variations[{{ $i }}][id][{!! $key !!}]">
+                                                            @foreach($attributes as $attribute)
+                                                                @if($attribute->id == $attr_id)
+                                                                    @foreach($attribute->values as $value)
+                                                                        <option value="{!! $value->id !!}"
+                                                                                @if ($value->id == $val->id)
+                                                                                selected
+                                                                                @endif
+                                                                        >{!! $value->name !!}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td align="center">
+                                                        <button class="btn btn-danger" onclick="$(this).parent().parent().remove();">Удалить</button>
+                                                        @if($key == count($variation->attribute_values) - 1)
+                                                            <input type="hidden" value="{!! $key !!}" class="attributes-iterator" />
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" align="center">
+                                                        <input type="hidden" value="0" class="attributes-iterator" />
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td align="center">
+                                                    <button type="button" onclick="getVariationAttributes($(this), {{ $i }});" class="btn add-attribute add-var-attr">Добавить атрибут</button>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-element col-sm-12">
+                                    <button style="float: right;" type="button" id="add-variation" onclick="addVariation($(this));" class="btn">Добавить вариацию</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-12 text-right">

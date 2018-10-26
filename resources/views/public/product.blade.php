@@ -74,12 +74,39 @@
                                 <div class="productContainer-art">
                                     Артикул: <span>{{ $product->articul }}</span>
                                 </div>
+                                @if(count($variations))
+                                    <form action="#" id="variations">
+                                        <input type="hidden" id="variation" name="variation" value="">
+                                        @foreach($variations as $attr_id => $attr)
+                                            <div class="product-filter__wrapper">
+                                                <span class="product-filter__title">{{ $attr['name'] }}:</span>
+                                                <div class="product-filter__select-wrapper">
+                                                    <select name="attr[{{ $attr_id }}]" class="product-filter__select variation-select">
+                                                        <option value="">Сделайте выбор</option>
+                                                        @php natsort($attr['values']); @endphp
+                                                        @foreach($attr['values'] as $id => $name)
+                                                            <option value="{{ $id }}">{{ $name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        @foreach($variations_prices as $variation => $val)
+                                            <input class="hidden" type="radio" id="var_{{ $variation }}" name="variation" value="{{ $val['id'] }}" data-price="{{ $val['price'] }}">
+                                        @endforeach
+                                    </form>
+                                @endif
                                 <div class="productContainer-price">
                                     @if(!empty($product->price))
-                                        {{ round($product->price, 2) . ($max_price > $product->price ? ' - '.$max_price : '') }} грн
+                                        <div class="product-price" data-price="{{ round($product->price, 2) . ($max_price > $product->price ? ' - '.$max_price : '') }}"><span>{{ round($product->price, 2) . ($max_price > $product->price ? ' - '.$max_price : '') }}</span> грн.</div>
                                     @else
-                                        Цену уточняйте!
+                                        <div class="product-price" data-price="{{ round($product->price, 2) . ($max_price > $product->price ? ' - '.$max_price : '') }}"><span>Цена по запросу</span></div>
                                     @endif
+                                    {{--@if(!empty($product->price))--}}
+                                        {{--{{ round($product->price, 2) . ($max_price > $product->price ? ' - '.$max_price : '') }} грн--}}
+                                    {{--@else--}}
+                                        {{--Цену уточняйте!--}}
+                                    {{--@endif--}}
                                 </div>
                                 <div class="productContainer-exprice">
                                     @if(!empty($product->old_price))
