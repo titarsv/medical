@@ -257,8 +257,8 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-sm-2 text-right">Курс гривны</label>
-                                <div class="form-element col-sm-10">
+                                <label class="col-sm-3 text-right">Курс гривны к евро</label>
+                                <div class="form-element col-sm-9">
                                     <input type="text" class="form-control" name="rate" value="{!! $settings->rate !!}" />
                                 </div>
                             </div>

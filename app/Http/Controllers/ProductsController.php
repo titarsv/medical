@@ -124,9 +124,7 @@ class ProductsController extends Controller
         $validator = Validator::make($request->all(), $this->rules, $this->messages);
 
 //        dd($image->find($request->image_id)->href);
-//
 //        $image_href = $image->find($request->image_id)->href;
-//
 //        $request->merge(['href' => $image_href]);
 
         if ($validator->fails() || $attributes_error) {
@@ -139,7 +137,6 @@ class ProductsController extends Controller
         }
 
 //        $gallery_id = $gallery->add_gallery($request->gallery);
-//
 //        $request->merge(['gallery_id' => $gallery_id]);
 
         $data = ['products' => $request->except('product_category_id')];
@@ -159,6 +156,16 @@ class ProductsController extends Controller
         }
 
         $data['galleries'] = $request->gallery;
+
+	    $settings = new Settings;
+	    $rate = $settings->get_setting('rate');
+
+        if(!empty($data['old_price_eur'])){
+	        $data['old_price'] = round($data['old_price_eur'] * $rate, 2);
+        }
+	    if(!empty($data['price_eur'])){
+		    $data['price'] = round($data['price_eur'] * $rate, 2);
+	    }
 
 	    $id = $products->insert_product($data);
 
@@ -238,6 +245,8 @@ class ProductsController extends Controller
             'image_id',
             'price',
             'old_price',
+	        'price_eur',
+	        'old_price_eur',
             'articul',
             'stock',
             'action',
@@ -259,6 +268,16 @@ class ProductsController extends Controller
         }else{
             $product->gallery->images = json_encode($request->gallery);
         }
+
+	    $settings = new Settings;
+	    $rate = $settings->get_setting('rate');
+
+	    if(!empty($product_table_fill['old_price_eur'])){
+		    $product_table_fill['old_price'] = round($product_table_fill['old_price_eur'] * $rate, 2);
+	    }
+	    if(!empty($product_table_fill['price_eur'])){
+		    $product_table_fill['price'] = round($product_table_fill['price_eur'] * $rate, 2);
+	    }
 
         $product->set_products()->sync($request->sets);
         $product->related()->sync($request->related);

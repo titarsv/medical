@@ -167,11 +167,19 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-sm-2 text-right control-label">Старая цена</label>
-                                <div class="form-element col-sm-10">
+                                <label class="col-sm-2 text-right">Старая цена</label>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">UAH:</span></div>
+                                <div class="form-element col-sm-4">
                                     <input type="text" class="form-control" name="old_price" value="{!! old('old_price') ? old('old_price') : $product->old_price !!}" />
                                     @if($errors->has('old_price'))
                                         <p class="warning" role="alert">{!! $errors->first('old_price',':message') !!}</p>
+                                    @endif
+                                </div>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">EUR:</span></div>
+                                <div class="form-element col-sm-4">
+                                    <input type="text" class="form-control" name="old_price_eur" value="{!! old('old_price_eur') ? old('old_price_eur') : ($product->old_price_eur ? $product->old_price_eur : '') !!}" />
+                                    @if($errors->has('old_price_eur'))
+                                        <p class="warning" role="alert">{!! $errors->first('old_price_eur',':message') !!}</p>
                                     @endif
                                 </div>
                             </div>
@@ -179,10 +187,18 @@
                         <div class="form-group">
                             <div class="row">
                                 <label class="col-sm-2 text-right control-label">Цена</label>
-                                <div class="form-element col-sm-10">
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">UAH:</span></div>
+                                <div class="form-element col-sm-4">
                                     <input type="text" class="form-control" name="price" value="{!! old('price') ? old('price') : $product->price !!}" />
                                     @if($errors->has('price'))
                                         <p class="warning" role="alert">{!! $errors->first('price',':message') !!}</p>
+                                    @endif
+                                </div>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">EUR:</span></div>
+                                <div class="form-element col-sm-4">
+                                    <input type="text" class="form-control" name="price_eur" value="{!! old('price_eur') ? old('price_eur') : ($product->price_eur ? $product->price_eur : '') !!}" />
+                                    @if($errors->has('price_eur'))
+                                        <p class="warning" role="alert">{!! $errors->first('price_eur',':message') !!}</p>
                                     @endif
                                 </div>
                             </div>

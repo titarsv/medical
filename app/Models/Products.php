@@ -26,6 +26,8 @@ class Products extends Model
         'label',
         'price',
         'old_price',
+	    'price_eur',
+	    'old_price_eur',
         'product_category_id',
         'product_related_category_id',
         'image_id',

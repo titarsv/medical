@@ -122,10 +122,18 @@
                         <div class="form-group">
                             <div class="row">
                                 <label class="col-sm-2 text-right control-label">Цена</label>
-                                <div class="form-element col-sm-10">
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">UAH:</span></div>
+                                <div class="form-element col-sm-4">
                                     <input type="text" class="form-control" name="price" value="{!! old('price') !!}" />
                                     @if($errors->has('price'))
                                         <p class="warning" role="alert">{!! $errors->first('price',':message') !!}</p>
+                                    @endif
+                                </div>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">EUR:</span></div>
+                                <div class="form-element col-sm-4">
+                                    <input type="text" class="form-control" name="price_eur" value="{!! old('price_eur') !!}" />
+                                    @if($errors->has('price_eur'))
+                                        <p class="warning" role="alert">{!! $errors->first('price_eur',':message') !!}</p>
                                     @endif
                                 </div>
                             </div>
