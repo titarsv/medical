@@ -20,13 +20,22 @@ class Gallery extends Model
 
     public function objects()
     {
-        $images_ids = json_decode($this->images);
+        $images_ids = json_decode($this->images, true);
         $images = [];
 
         if(!empty($images_ids)) {
             $image = new Image;
-            foreach ($images_ids as $id) {
-                $images[] = $image->get_image($id);
+            foreach ($images_ids as $img) {
+                if(is_array($img) && isset($img['id'])){
+                    $images[] = [
+                        'image' => $image->get_image($img['id']),
+                        'alt' => $img['alt'],
+                        'title' => $img['title']
+                    ];
+                }else{
+                    $images[]['image'] = $image->get_image($img);
+                }
+
             }
         }
 

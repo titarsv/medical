@@ -29,7 +29,7 @@
                             <div class="row">
                                 <label class="col-sm-2 text-right control-label">Название</label>
                                 <div class="form-element col-sm-10">
-                                    <input type="text" data-translit="input" class="form-control" name="name" value="{!! old('name') ? old('name') : $product->name !!}" />
+                                    <input type="text" class="form-control" name="name" value="{!! old('name') ? old('name') : $product->name !!}" />
                                     @if($errors->has('name'))
                                         <p class="warning" role="alert">{!! $errors->first('name',':message') !!}</p>
                                     @endif
@@ -52,12 +52,16 @@
                                      <div class="row gallery-container">
                                          @if(!is_null($product->gallery))
                                              @foreach($product->gallery->objects() as $image)
-                                                 @if(is_object($image))
+                                                 @if(is_object($image['image']))
                                                      <div class="col-sm-3">
                                                          <div>
                                                              <i class="remove-gallery-image">-</i>
-                                                             <input name="gallery[]" value="{{ $image->id }}" type="hidden">
-                                                             <img src="{{ $image->url('product_gallery') }}">
+                                                             <input name="gallery[]" value="{{ $image['image']->id }}" type="hidden">
+                                                             <img src="{{ $image['image']->url('product_gallery') }}">
+                                                             <div class="meta">
+                                                                 <input name="gallery_img_alt[]" value="{{ $image['alt'] or '' }}" type="text" placeholder="alt">
+                                                                 <input name="gallery_img_title[]" value="{{ $image['title'] or '' }}" type="text" placeholder="title">
+                                                             </div>
                                                          </div>
                                                      </div>
                                                  @endif
@@ -73,12 +77,16 @@
                                     <div class="row gallery-container">
                                         @if(!is_null($product->photos))
                                             @foreach($product->photos->objects() as $image)
-                                                @if(is_object($image))
+                                                @if(is_object($image['image']))
                                                     <div class="col-sm-3">
                                                         <div>
                                                             <i class="remove-gallery-image">-</i>
-                                                            <input name="photos[]" value="{{ $image->id }}" type="hidden">
-                                                            <img src="{{ $image->url('product_gallery') }}">
+                                                            <input name="photos[]" value="{{ $image['image']->id }}" type="hidden">
+                                                            <img src="{{ $image['image']->url('product_gallery') }}">
+                                                            <div class="meta">
+                                                                <input name="photos_img_alt[]" value="{{ $image['alt'] or '' }}" type="text" placeholder="alt">
+                                                                <input name="photos_img_title[]" value="{{ $image['title'] or '' }}" type="text" placeholder="title">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -310,7 +318,7 @@
                             <div class="row">
                                 <label class="col-sm-2 text-right control-label">Alias</label>
                                 <div class="form-element col-sm-10">
-                                    <input type="text" data-translit="output" class="form-control" name="url_alias" value="{!! old('url_alias') ? old('url_alias') : $product->url_alias !!}" />
+                                    <input type="text" class="form-control" name="url_alias" value="{!! old('url_alias') ? old('url_alias') : $product->url_alias !!}" />
                                     @if($errors->has('url_alias'))
                                         <p class="warning" role="alert">{!! $errors->first('url_alias',':message') !!}</p>
                                     @endif

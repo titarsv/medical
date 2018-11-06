@@ -763,3 +763,13 @@ div.form-control {
     z-index: 5;
     background-color: rgba(32, 32, 32, 0.4);
 }
+.gallery-container > div > div .meta{
+    position: absolute;
+    top: 100%;
+    right: 5px;
+    z-index: 1;
+    display: none;
+}
+.gallery-container > div > div:hover .meta{
+    display: block;
+}

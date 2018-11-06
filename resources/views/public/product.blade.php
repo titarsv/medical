@@ -1,11 +1,19 @@
 @extends('public.layouts.main')
 @section('meta')
-    @if(!empty($product->meta_title))
-        <title>{!! $product->meta_title !!} купить в Харькове, Киеве, Украине по низкой цене</title>
+    <title>
+        @if(empty(trim($product->meta_title)) || $product->meta_title == 'NULL')
+            {!! $product->name !!} купить в Харькове, Киеве, Украине по низкой цене
+        @else
+            {{ $product->meta_title }}
+        @endif
+    </title>
+
+    @if(empty(trim($product->meta_description)) || $product->meta_description == 'NULL')
+        <meta name="description" content="{!! !empty($product->meta_description) ? $product->meta_description : $product->name.'【Доставка по Украине 1-2 дня】【Постоянным клиентам и оптовикам скидки!】 ☎+38 (099) 235 65 13' !!}">
     @else
-        <title>{!! $product->name !!} купить в Харькове, Киеве, Украине по низкой цене</title>
+        <meta name="description" content="{!! $product->meta_description !!}">
     @endif
-    <meta name="description" content="{!! !empty($product->meta_description) ? $product->meta_description : $product->name.'【Доставка по Украине 1-2 дня】【Постоянным клиентам и оптовикам скидки!】 ☎+38 (099) 235 65 13' !!}">
+
     <meta name="keywords" content="{!! $product->meta_keywords !!}">
     @if(!empty($product->robots))
         <meta name="robots" content="{!! $product->robots !!}">
@@ -28,6 +36,27 @@
                     <link itemprop="image" href="{{ $product->image->url('full') }}" />
                     <meta itemprop="productID" content="{{ $product->id }}" />
                     <meta itemprop="price" content="{{ $product->price }}" />
+                    @if(!empty($reviews))
+                        @php
+                            $bestRating = 0;
+                            $sumRating = 0;
+                            $reviewCount = 0;
+                            foreach($reviews as $review){
+                                if($review['parent']->grade > $bestRating){
+                                    $bestRating = $review['parent']->grade;
+                                }
+                                $sumRating += $review['parent']->grade;
+                                $reviewCount++;
+                            }
+                        @endphp
+                        @if($reviewCount > 0)
+                            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
+                                <span itemprop="ratingValue">{{ round($sumRating/$reviewCount, 2) }}</span>
+                                <span itemprop="bestRating">{{ $bestRating }}</span>
+                                <span itemprop="reviewCount">{{ $reviewCount }}</span>
+                            </div>
+                        @endif
+                    @endif
 
                     <div class="col-sm-12 col-md-4">
                         @if(!empty($product->old_price))
@@ -43,9 +72,9 @@
                         @endif
                         <div class="productContainer-img slick-slider">
                             @forelse($gallery as $i => $image)
-                                @if(is_object($image))
-                                    <a href="{{ $image->url('full') }}" class="fancybox">
-                                        <img id="image-{{ $i }}" class="gallery-image" src="{{ $image->url('full') }}" alt="{{ $product->name }}">
+                                @if(is_object($image['image']))
+                                    <a href="{{ $image['image']->url('full') }}" class="fancybox">
+                                        <img id="image-{{ $i }}" class="gallery-image" src="{{ $image['image']->url('full') }}"{!! empty($image['alt']) ? '' : ' alt="'.$image['alt'].'"' !!}{!! empty($image['title']) ? '' : ' title="'.$image['title'].'"' !!} itemprop="image">
                                     </a>
                                 @endif
                             @empty
@@ -396,8 +425,8 @@
                                 <div class="col-sm-12 buy-popup-product-wrp">
                                     <div class="col-sm-3 col-xs-12">
                                         @forelse($gallery as $image)
-                                            @if(is_object($image))
-                                                <img src="{{ $image->url('full') }}" alt="{{ $product->name }}">
+                                            @if(is_object($image['image']))
+                                                <img src="{{ $image['image']->url('full') }}"{!! empty($image['alt']) ? '' : ' alt="'.$image['alt'].'"' !!}{!! empty($image['title']) ? '' : ' title="'.$image['title'].'"' !!} itemprop="image">
                                             @endif
                                         @empty
                                             <img src="/assets/images/no_image.jpg">

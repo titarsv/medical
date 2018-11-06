@@ -486,7 +486,7 @@ class ProductsController extends Controller
 
         // Если у товара нет галлереи возвращаем его изображение
         if(empty($product->gallery))
-            $gallery = [$product->image];
+            $gallery = [['image' => $product->image, 'alt' => $product->name, 'title' => $product->name]];
         else
             $gallery = $product->gallery->objects();
 

@@ -60,6 +60,10 @@ $(document).ready(function(){
                         '<i class="remove-gallery-image">-</i>' +
                         '<input type="hidden" name="gallery[]" value="' + file.id + '">' +
                         '<img src="/assets/images/' + file.href + '">' +
+                        '<div class="meta">' +
+                        '<input name="gallery_img_alt[]" value="" type="text" placeholder="alt">' +
+                        '<input name="gallery_img_title[]" value="" type="text" placeholder="title">' +
+                        '</div>' +
                         '</div>' +
                         '</div>');
                 }
@@ -76,12 +80,16 @@ $(document).ready(function(){
                     };
 
                     $('#add-photos-image').before('<div class="col-sm-3">' +
-                    '<div>' +
-                    '<i class="remove-gallery-image">-</i>' +
-                    '<input type="hidden" name="photos[]" value="' + file.id + '">' +
-                    '<img src="/assets/images/' + file.href + '">' +
-                    '</div>' +
-                    '</div>');
+                        '<div>' +
+                        '<i class="remove-gallery-image">-</i>' +
+                        '<input type="hidden" name="photos[]" value="' + file.id + '">' +
+                        '<img src="/assets/images/' + file.href + '">' +
+                        '<div class="meta">' +
+                        '<input name="photos_img_alt[]" value="" type="text" placeholder="alt">' +
+                        '<input name="photos_img_title[]" value="" type="text" placeholder="title">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
                 }
 
                 ig.unset();
