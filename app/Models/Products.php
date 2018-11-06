@@ -119,14 +119,14 @@ class Products extends Model
      */
     public function search($text = '', $page = 1, $count = 8)
     {
-        //$all_products = $this->where('name', 'like', '%'.$text.'%');
+        $search = explode(' ', $text);
+        $results = $this->where('stock', 1);
+        foreach($search as $s){
+            $results->where('name', 'like', '%' . $s . '%');
+        }
+        $data = $results->paginate($count);
 
-        //$paginate = 1;
-
-        //$all_count = $this->where('name', 'like', '%'.$text.'%')->count();
-
-        $data = $this->where('name', 'like', '%'.$text.'%')->paginate($count);
-        //$data = new LengthAwarePaginator($all_products->skip($count*($page-1))->take($count)->get(), ceil($all_count/$count), $paginate, $page, array('path' => 'search/'));
+//        $data = $this->where('stock', 1)->where('name', 'like', '%'.$text.'%')->paginate($count);
 
         return $data;
     }
