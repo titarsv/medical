@@ -26,6 +26,8 @@ class Products extends Model
         'label',
         'price',
         'old_price',
+	    'price_eur',
+	    'old_price_eur',
         'product_category_id',
         'product_related_category_id',
         'image_id',
@@ -103,6 +105,12 @@ class Products extends Model
     {
         return $this->belongsToMany('App\Models\Products', 'product_sets', 'set_id', 'product_id');
     }
+
+	// Вариации
+	public function variations()
+	{
+		return $this->hasMany('App\Models\Variation', 'product_id');
+	}
 
     // Связанные товары
     public function related()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 use App\Http\Requests;
@@ -67,6 +68,21 @@ class SettingsController extends Controller
                 ->withInput()
                 ->with('message-error', 'Сохранение не удалось! Проверьте форму на ошибки!')
                 ->withErrors($validator);
+        }
+
+        $old_rate = (float)$settings->get_setting('rate');
+        $new_rate = (float)$request->rate;
+        if($old_rate != $new_rate){
+        	$products = Products::where('price_eur', '!=', 0)->orWhere('old_price_eur', '!=', 0)->get();
+        	foreach($products as $product){
+        		if(!empty($product->price_eur)){
+			        $product->price = $product->price_eur * $new_rate;
+		        }
+		        if(!empty($product->old_price_eur)){
+			        $product->old_price = $product->old_price_eur * $new_rate;
+		        }
+		        $product->push();
+	        }
         }
 
         $settings->update_settings($request->except('_token'), true);

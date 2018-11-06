@@ -516,3 +516,113 @@ function overlaySettings(setting){
 function deleteAttribute(id){
     $('.form-group.attribute-value').append('<input type="hidden" name="values[delete][]" value="' + id + '" />');
 }
+
+function getVariationAttributes(obj, iterator)
+{
+    $.ajax({
+        url: '/admin/products/getattributevalues',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function(resp)
+        {
+            addVariationAttribute(resp, obj, iterator);
+        }
+    });
+
+}
+
+function addVariationAttribute(resp, obj, it){
+    var table = obj.parents('table');
+    console.log(it);
+    if(typeof it == 'undefined'){
+        // var iterator = table.find('.attributes-iterator').val();
+        // iterator++;
+        var iterator = $('.add-var-attr').length - 1;
+    }else{
+        var iterator = it;
+    }
+    console.log(table.find('.attributes-iterator'));
+    var html = '<tr>';
+    html += '<td><select class="form-control" onchange="getVariationAttributeValues($(this), '+iterator+')">';
+    html += '<option value="0">Не выбрано</option>';
+    $.each(resp, function(i, value){
+        html += '<option value="' + value['attribute_id'] + '">' + value['attribute_name'] + '</option>';
+    });
+    html += '</select></td>';
+    html += '<td align="center" id="attribute-' + iterator + '-values">Выберите значение атрибута</td>';
+    html += '<td align="center"><button class="btn btn-danger" onclick="$(this).parent().parent().remove();">Удалить</button></td>';
+    html += '</tr>';
+    table.append(html);
+
+    if(typeof it == 'undefined') {
+        table.find('.attributes-iterator').val(iterator);
+    }
+}
+
+function getVariationAttributeValues(obj, iterator)
+{
+    var attribute_id = obj.val();
+    var key = obj.parents('table').find('.variation_value').length;
+    var data = {
+        'attribute_id': attribute_id
+    };
+
+    $.ajax({
+        url: '/admin/products/getattributevalues',
+        type: 'POST',
+        data: data,
+        dataType: 'JSON',
+        success: function(resp)
+        {
+            if (resp.length) {
+                var html = '<select class="form-control variation_value" name="variations[' + iterator + '][id]['+key+']">';
+                $.each(resp, function (i, value) {
+                    html += '<option value="' + value['attribute_value_id'] + '">' + value['attribute_value'] + '</option>';
+                });
+                html += '</select>';
+            } else {
+                var html = 'Выберите значение атрибута';
+            }
+
+            obj.parent().next().html(html);
+        }
+    })
+}
+
+function addVariation(obj){
+    var html = '<div class="form-group">\n' +
+        '<div class="row">\n' +
+        '<label class="col-sm-2 text-right">Цена</label>\n' +
+        '<div class="form-element col-sm-10">\n' +
+        '<input class="form-control variation-price" name="variations['+$('.variation-price').length+'][price]" value="" type="text">\n' +
+        '</div>\n' +
+        '</div>\n' +
+        '</div>' +
+        '<div class="form-group">\n' +
+        '<div class="row">' +
+        '<div class="table table-responsive">\n' +
+        '<table class="table table-hover">\n' +
+        '<thead>\n' +
+        '<tr class="success">\n' +
+        '<td align="center">Выберите атрибут</td>\n' +
+        '<td align="center">Выберите значение атрибута</td>\n' +
+        '<td align="center">Действия</td>\n' +
+        '</tr>\n' +
+        '</thead>\n' +
+        '<tbody class="product-attributes">\n' +
+        '</tbody>\n' +
+        '<tfoot>\n' +
+        '<tr>\n' +
+        '<td colspan="2"></td>\n' +
+        '<td align="center">\n' +
+        '<button type="button" onclick="getVariationAttributes($(this), '+$('.variation-price').length+');" class="btn add-attribute add-var-attr">Добавить атрибут</button>\n' +
+        '</td>\n' +
+        '</tr>\n' +
+        '</tfoot>\n' +
+        '</table>\n' +
+        '</div>\n' +
+        '</div>\n' +
+        '</div>';
+
+    obj.parents('.form-group').before(html);
+}

@@ -167,11 +167,19 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label class="col-sm-2 text-right control-label">Старая цена</label>
-                                <div class="form-element col-sm-10">
+                                <label class="col-sm-2 text-right">Старая цена</label>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">UAH:</span></div>
+                                <div class="form-element col-sm-4">
                                     <input type="text" class="form-control" name="old_price" value="{!! old('old_price') ? old('old_price') : $product->old_price !!}" />
                                     @if($errors->has('old_price'))
                                         <p class="warning" role="alert">{!! $errors->first('old_price',':message') !!}</p>
+                                    @endif
+                                </div>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">EUR:</span></div>
+                                <div class="form-element col-sm-4">
+                                    <input type="text" class="form-control" name="old_price_eur" value="{!! old('old_price_eur') ? old('old_price_eur') : ($product->old_price_eur ? $product->old_price_eur : '') !!}" />
+                                    @if($errors->has('old_price_eur'))
+                                        <p class="warning" role="alert">{!! $errors->first('old_price_eur',':message') !!}</p>
                                     @endif
                                 </div>
                             </div>
@@ -179,10 +187,18 @@
                         <div class="form-group">
                             <div class="row">
                                 <label class="col-sm-2 text-right control-label">Цена</label>
-                                <div class="form-element col-sm-10">
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">UAH:</span></div>
+                                <div class="form-element col-sm-4">
                                     <input type="text" class="form-control" name="price" value="{!! old('price') ? old('price') : $product->price !!}" />
                                     @if($errors->has('price'))
                                         <p class="warning" role="alert">{!! $errors->first('price',':message') !!}</p>
+                                    @endif
+                                </div>
+                                <div class="form-element col-sm-1"><span style="line-height: 34px; float: right">EUR:</span></div>
+                                <div class="form-element col-sm-4">
+                                    <input type="text" class="form-control" name="price_eur" value="{!! old('price_eur') ? old('price_eur') : ($product->price_eur ? $product->price_eur : '') !!}" />
+                                    @if($errors->has('price_eur'))
+                                        <p class="warning" role="alert">{!! $errors->first('price_eur',':message') !!}</p>
                                     @endif
                                 </div>
                             </div>
@@ -477,6 +493,103 @@
                                         </tr>
                                         </tfoot>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Вариации товара</h4>
+                    </div>
+                    <div class="panel-body">
+                        @foreach($product->variations as $i => $variation)
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="col-sm-2 text-right">Цена</label>
+                                    <div class="form-element col-sm-10">
+                                        <input type="text" class="form-control variation-price" name="variations[{{ $i }}][price]" value="{!! $variation->price !!}" />
+                                        @if($errors->has('robots'))
+                                            <p class="warning" role="alert">{!! $errors->first('robots',':message') !!}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="table table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr class="success">
+                                                <td align="center">Выберите атрибут</td>
+                                                <td align="center">Выберите значение атрибута</td>
+                                                <td align="center">Действия</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="product-attributes">
+                                            @forelse($variation->attribute_values as $key => $val)
+                                                <?php $attr_id = $val->attribute->id ?>
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control" onchange="getVariationAttributeValues($(this), {{ $i }})">
+                                                            @foreach($attributes as $attribute)
+                                                                <option value="{!! $attribute->id !!}"
+                                                                        @if ($attribute->id == $attr_id)
+                                                                        selected
+                                                                        @endif
+                                                                >{!! $attribute->name !!}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td align="center">
+                                                        {{--<input type="hidden" name="variations[{{ $i }}][id][{!! $key !!}]" value="{!! $val->id !!}" class="variation_value"/>--}}
+                                                        <select class="form-control variation_value" name="variations[{{ $i }}][id][{!! $key !!}]">
+                                                            @foreach($attributes as $attribute)
+                                                                @if($attribute->id == $attr_id)
+                                                                    @foreach($attribute->values as $value)
+                                                                        <option value="{!! $value->id !!}"
+                                                                                @if ($value->id == $val->id)
+                                                                                selected
+                                                                                @endif
+                                                                        >{!! $value->name !!}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td align="center">
+                                                        <button class="btn btn-danger" onclick="$(this).parent().parent().remove();">Удалить</button>
+                                                        @if($key == count($variation->attribute_values) - 1)
+                                                            <input type="hidden" value="{!! $key !!}" class="attributes-iterator" />
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" align="center">
+                                                        <input type="hidden" value="0" class="attributes-iterator" />
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td align="center">
+                                                    <button type="button" onclick="getVariationAttributes($(this), {{ $i }});" class="btn add-attribute add-var-attr">Добавить атрибут</button>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="form-element col-sm-12">
+                                    <button style="float: right;" type="button" id="add-variation" onclick="addVariation($(this));" class="btn">Добавить вариацию</button>
                                 </div>
                             </div>
                         </div>

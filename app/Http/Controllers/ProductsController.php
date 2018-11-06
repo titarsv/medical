@@ -6,6 +6,7 @@ use App\Models\Attributes;
 use App\Models\AttributeValues;
 use App\Models\Manufacturers;
 use App\Product;
+use App\Models\Variation;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Object_;
@@ -123,9 +124,7 @@ class ProductsController extends Controller
         $validator = Validator::make($request->all(), $this->rules, $this->messages);
 
 //        dd($image->find($request->image_id)->href);
-//
 //        $image_href = $image->find($request->image_id)->href;
-//
 //        $request->merge(['href' => $image_href]);
 
         if ($validator->fails() || $attributes_error) {
@@ -138,7 +137,6 @@ class ProductsController extends Controller
         }
 
 //        $gallery_id = $gallery->add_gallery($request->gallery);
-//
 //        $request->merge(['gallery_id' => $gallery_id]);
 
         $data = ['products' => $request->except('product_category_id')];
@@ -159,7 +157,21 @@ class ProductsController extends Controller
 
         $data['galleries'] = $request->gallery;
 
-        $products->insert_product($data);
+	    $settings = new Settings;
+	    $rate = $settings->get_setting('rate');
+
+        if(!empty($data['old_price_eur'])){
+	        $data['old_price'] = round($data['old_price_eur'] * $rate, 2);
+        }
+	    if(!empty($data['price_eur'])){
+		    $data['price'] = round($data['price_eur'] * $rate, 2);
+	    }
+
+	    $id = $products->insert_product($data);
+
+	    if($id != 'already_exist'){
+		    $this->updateVariations($products->find($id), $request->variations);
+	    }
 
         return redirect('/admin/products')
             ->with('message-success', 'Товар ' . $products->name . ' успешно добавлен.');
@@ -233,6 +245,8 @@ class ProductsController extends Controller
             'image_id',
             'price',
             'old_price',
+	        'price_eur',
+	        'old_price_eur',
             'articul',
             'stock',
             'action',
@@ -254,6 +268,16 @@ class ProductsController extends Controller
         }else{
             $product->gallery->images = json_encode($request->gallery);
         }
+
+	    $settings = new Settings;
+	    $rate = $settings->get_setting('rate');
+
+	    if(!empty($product_table_fill['old_price_eur'])){
+		    $product_table_fill['old_price'] = round($product_table_fill['old_price_eur'] * $rate, 2);
+	    }
+	    if(!empty($product_table_fill['price_eur'])){
+		    $product_table_fill['price'] = round($product_table_fill['price_eur'] * $rate, 2);
+	    }
 
         $product->set_products()->sync($request->sets);
         $product->related()->sync($request->related);
@@ -279,9 +303,56 @@ class ProductsController extends Controller
             $product->create_product_thumnail($product->id);
         }
 
+	    $this->updateVariations($product, $request->variations);
+
         return redirect('/admin/products')
             ->with('message-success', 'Товар ' . $product->name . ' успешно отредактирован.');
     }
+
+	/**
+	 * Обновление вариаций
+	 *
+	 * @param $product
+	 * @param $variations
+	 */
+	public function updateVariations($product, $variations){
+		$current_variations = $product->variations;
+		$add = [];
+		$remove = $current_variations->pluck(['id'])->toArray();
+		if(!empty($variations)){
+			foreach ($variations as $variation){
+				$add_var = true;
+				foreach ($current_variations as $var){
+					if(empty($variation['id'])){
+						$add_var = false;
+						break;
+					}
+					if(isset($variation['price']) && $var->price == $variation['price']){
+						if(empty(array_diff($variation['id'], $var->attribute_values->pluck(['id'])->toArray())) && empty(array_diff($var->attribute_values->pluck(['id'])->toArray(), $variation['id']))){
+							$add_var = false;
+							unset($remove[array_search($var->id,$remove)]);
+							break;
+						}
+					}
+				}
+				if($add_var){
+					$add[] = $variation;
+				}
+			}
+		}
+
+		foreach ($remove as $id){
+			$v = new Variation();
+			$v->find($id)->update(['product_id' => 0]);
+		}
+		foreach ($add as $variation){
+			if(!empty($variation['price']) && !empty($variation['id'])){
+				$v = new Variation();
+				$id = $v->insertGetId(['product_id' => $product->id, 'price' => $variation['price']]);
+				$v->find($id)->attribute_values()->attach($variation['id']);
+			}
+		}
+	}
 
     /**
      * Remove the specified resource from storage.
@@ -423,25 +494,54 @@ class ProductsController extends Controller
 
         $attributes = [];
 
-        $variations = $product->get_variations();
+	    //        $variations = $product->get_variations();
 
-        foreach ($product->attributes as $attribute){
-            if(!isset($variations[$attribute->attribute_id])) {
-                if (!isset($attributes[$attribute->info->name])) {
-                    $attributes[$attribute->info->name] = [];
-                }
-                $attributes[$attribute->info->name][] = ['name' => $attribute->value->name, 'value' => $attribute->value->value];
-            }
-        }
+	    foreach ($product->attributes as $attribute){
+//            if(!isset($variations[$attribute->attribute_id])) {
+		    if (!isset($attributes[$attribute->info->name])) {
+			    $attributes[$attribute->info->name] = [];
+		    }
+		    $attributes[$attribute->info->name][] = ['name' => $attribute->value->name, 'value' => $attribute->value->value];
+//            }
+	    }
 
-        $max_price = $product->price;
-        foreach($variations as $attrs){
-            foreach($attrs as $attr){
-                if($max_price < $product->price + $attr->price){
-                    $max_price = $product->price + $attr->price;
-                }
-            }
-        }
+//        $max_price = $product->price;
+//        foreach($variations as $attrs){
+//            foreach($attrs as $attr){
+//                if($max_price < $product->price + $attr->price){
+//                    $max_price = $product->price + $attr->price;
+//                }
+//            }
+//        }
+
+	    $max_price = $product->price;
+	    $variations_attrs = [];
+	    $variations_prices = [];
+
+	    foreach($product->variations as $variation){
+		    $values = $variation->attribute_values;
+		    $variations_prices[implode('_', $values->pluck(['id'])->sort()->values()->all())] = [
+			    'price' => $variation->price,
+			    'id' => $variation->id
+		    ];
+		    if($max_price < $variation->price){
+			    $max_price = $variation->price;
+		    }
+		    foreach($values as $value){
+			    $attr = $value->attribute;
+			    if(!isset($variations_attrs[$attr->id])){
+				    $variations_attrs[$attr->id] = [
+					    'name' => $attr->name,
+					    'values' => [
+						    $value->id => $value->name
+					    ]
+				    ];
+			    }elseif(!isset($variations_attrs[$attr->id]['values'][$value->id])){
+				    $variations_attrs[$attr->id]['values'][$value->id] = $value->name;
+			    }
+		    }
+		    asort($variations_attrs[$attr->id]['values']);
+	    }
 
         return response(view('public.product')
             ->with('product', $product)
@@ -450,7 +550,8 @@ class ProductsController extends Controller
             ->with('reviews', $product_reviews)
             ->with('product_attributes', $attributes)
             ->with('related', $product->related())
-            ->with('variations', $variations));
+	        ->with('variations_prices', $variations_prices)
+	        ->with('variations', $variations_attrs));
     }
 
     /**

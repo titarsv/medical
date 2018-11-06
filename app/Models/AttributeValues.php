@@ -17,8 +17,8 @@ class AttributeValues extends Model
     protected $table = 'attribute_values';
     public $timestamps = false;
 
-    public function attribute()
-    {
-        return $this->belongsTo('App\Models\Attributes', 'id');
-    }
+	public function attribute()
+	{
+		return $this->belongsTo('App\Models\Attributes', 'attribute_id');
+	}
 }
