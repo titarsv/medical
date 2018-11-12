@@ -172,6 +172,23 @@
                                         <li>Оплата по счету без НДС (ФОП)</li>
                                     </ul>
                                 </div>
+                                @if(!empty($reviews) && isset($sumRating) && !empty($reviewCount))
+                                    <div class="productContainer-info">
+                                        <div style="color: #000;font-weight: 700;margin-bottom: 10px;padding-left: 40px;">Рейтинг товара</div>
+                                        <div class="rating" style="margin-top: 10px;">
+                                            @php
+                                                $rating = round($sumRating/$reviewCount);
+                                            @endphp
+                                            @for($i=1; $i<=5; $i++)
+                                                @if($i <= $rating)
+                                                    <img src="/images/rp.png" alt="rp">
+                                                @else
+                                                    <img src="/images/rm.png" alt="rm">
+                                                @endif
+                                            @endfor
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="productContainer-action">
